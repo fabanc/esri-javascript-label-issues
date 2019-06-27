@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>Add labels to a FeatureLayer - 4.11</title>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.11/esri/themes/light-green/main.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="css/main.css"
+    />
+
+    <script src="https://js.arcgis.com/4.11/"></script>
+
+    <script>
+      require([
+        "esri/WebMap",
+        "esri/views/MapView",
+        "esri/layers/FeatureLayer",
+        "esri/widgets/Search",
+        "esri/Graphic",
+        "esri/symbols/TextSymbol",
+        "esri/symbols/Font",
+        "esri/layers/GraphicsLayer",
+        "esri/geometry/Point",
+        "esri/Map",
+      ], function(
+        WebMap,
+        MapView,
+        FeatureLayer,
+        Search,
+        Graphic,
+        TextSymbol,
+        Font,
+        GraphicsLayer,
+        Point,
+        Map
+      ) {
+
+        // This example is a adapted modification of https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=labels-basic
+        
+        // ---------------------------------------------------------------
+        // -- Create all elements required for a text symbol
+        // ---------------------------------------------------------------
+        var font = new Font({
+              size: 12,
+              family: "sans-serif",
+              weight: "normal",
+              style: "normal",
+              decoration: "underline"
+        });
+
+        var textSymbol = new TextSymbol({
+          text: "Default Text only in use for text symbol, not labelling ...",
+          color: "black",
+          xoffset: 3,
+          yoffset: 3,
+          font: font
+        });
+
+        var labelClass = {
+          symbol: textSymbol,
+          labelPlacement: "above-center",
+          labelExpressionInfo: {
+            expression: "$feature.MARKER_ACTIVITY"
+          }
+        };
+
+        // ---------------------------------------------------------------
+        // -- Initialize the map with some layers in used for testing
+        // ---------------------------------------------------------------
+        // Layer that will display the TextSymbol added as graphic.
+        var drawingLayer = new GraphicsLayer(
+          {title: "Label Testing Layers", listMode: "hide"
+        });
+        
+        // AGOL demo layer used for labelling. - Use the label class defined above
+        var demoFeatureLayer = new FeatureLayer({
+          portalItem: {
+            // autocasts as new PortalItem
+            id: "6012738cd1c74582a5f98ea30ae9876f"
+          },
+          labelingInfo: [labelClass],
+          renderer: {
+            type: "simple", // autocasts as new SimpleRenderer()
+            symbol: {
+              type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+              color: "rgba(0,100,0,0.6)",
+              size: 3,
+              outline: {
+                color: [0, 0, 0, 0.1],
+                width: 0.5
+              }
+            }
+          }
+        })
+        
+        var map = new WebMap({
+            portalItem: {
+              // autocasts as new PortalItem
+              id: "372b7caa8fe340b0a6300df93ef18a7e"
+            }
+          });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [-116.925, 34.2501],
+          zoom: 14
+        });
+
+        view.map.add(drawingLayer)
+        view.map.add(demoFeatureLayer);
+
+
+        // ---------------------------------------------------------------
+        // -- Initialize the map with some layers in used for testing
+        // ---------------------------------------------------------------
+        drawingLayer.add(new Graphic({
+          geometry: view.center,
+          symbol: textSymbol
+        }));
+        
+      });
+    </script>
+  </head>
+
+  <body>
+    <div>This web page seems to indicate that underlining text does not work in labels. The same text symbol is used as a base for labelling and creating the text graphic.</div>
+    <div id="viewDiv"></div>
+  </body>
+</html>
