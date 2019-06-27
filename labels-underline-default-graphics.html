@@ -45,6 +45,8 @@
         Map
       ) {
 
+        // This example is a adapted modification of https://developers.arcgis.com/javascript/latest/sample-code/sandbox/index.html?sample=labels-basic
+      
         // ---------------------------------------------------------------
         // -- Create all elements required for a text symbol
         // ---------------------------------------------------------------
@@ -101,7 +103,6 @@
           }
         })
         
-        var map = new Map({basemap: 'streets'});
         const view = new MapView({
           container: "viewDiv",
           map: new Map({basemap: 'streets'}),
