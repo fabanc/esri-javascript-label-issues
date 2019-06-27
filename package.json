@@ -1,0 +1,21 @@
+{
+  "name": "esri-javascript-label-issues",
+  "version": "1.0.0",
+  "description": "A package to identify label bugs in Esri JavaScript 4.x API",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server --cors",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Esri",
+    "JavaScript",
+    "API",
+    "4"
+  ],
+  "author": "Fabien Ancelin",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
+}
